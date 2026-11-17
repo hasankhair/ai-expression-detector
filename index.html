@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>AI Facial Expression Detector</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LOCAL-ONLY COMPUTER VISION</p>
+          <h1>AI Facial Expression Detector</h1>
+        </div>
+        <div class="topbar-actions">
+          <div class="theme-picker" aria-label="Choose dashboard colour">
+            <span class="theme-picker-label">COLOUR</span>
+            <div class="theme-options" role="group" aria-label="Colour themes">
+              <button class="theme-option" type="button" data-theme-choice="black" aria-label="Black theme" title="Black theme"></button>
+              <button class="theme-option" type="button" data-theme-choice="white" aria-label="White theme" title="White theme"></button>
+              <button class="theme-option" type="button" data-theme-choice="red" aria-label="Red theme" title="Red theme"></button>
+              <button class="theme-option" type="button" data-theme-choice="green" aria-label="Green theme" title="Green theme"></button>
+              <button class="theme-option is-selected" type="button" data-theme-choice="blue" aria-label="Blue theme" title="Blue theme" aria-pressed="true"></button>
+              <button class="theme-option" type="button" data-theme-choice="yellow" aria-label="Yellow theme" title="Yellow theme"></button>
+            </div>
+          </div>
+          <div class="privacy-badge"><span class="pulse-dot"></span> Frames stay in this browser</div>
+        </div>
+      </header>
+
+      <section class="notice" aria-label="Important limitation">
+        This tool estimates visible facial-expression patterns, not emotions, intent, identity, or mental health. Scores are approximate model-derived signals and are not calibrated emotional confidence.
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="panel camera-panel">
+          <div class="panel-heading"><div><p class="section-kicker">LIVE INPUT</p><h2>Camera</h2></div><span id="cameraStatus" class="status status-idle">Camera off</span></div>
+          <div class="camera-stage">
+            <video id="webcam" autoplay playsinline muted aria-label="Webcam video"></video>
+            <canvas id="landmarkCanvas" aria-label="Facial landmark overlay"></canvas>
+            <div id="cameraEmpty" class="camera-empty"><span class="camera-icon">◉</span><strong>Camera is off</strong><span>Start the camera to analyse visible expression patterns.</span></div>
+          </div>
+          <div class="camera-meta"><span id="faceStatus">Waiting for camera</span><span id="frameRate">— fps</span></div>
+          <div class="button-row"><button id="startCamera" class="button button-primary">Start camera</button><button id="stopCamera" class="button button-secondary" disabled>Stop camera</button></div>
+          <p id="cameraError" class="error-message" role="alert"></p>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-heading"><div><p class="section-kicker">CURRENT ESTIMATE</p><h2>Expression</h2></div><span id="modelStatus" class="status status-idle">Loading model…</span></div>
+          <div class="expression-hero">
+            <div id="expressionIcon" class="expression-icon">—</div>
+            <div><p id="expressionLabel" class="expression-label">Waiting</p><p id="expressionDescription" class="muted">Start your camera when the model is ready.</p></div>
+          </div>
+          <div class="metric"><div><span>Expression score</span><strong id="expressionScore">—</strong></div><div class="meter"><i id="expressionMeter"></i></div></div>
+          <div class="metric"><div><span>Approx. model-derived signal</span><strong id="confidenceScore">—</strong></div><div class="meter subdued"><i id="confidenceMeter"></i></div></div>
+          <p class="fine-print">Stability smoothing and a persistence period reduce flicker. The displayed estimate may lag slightly behind your movement.</p>
+        </section>
+
+        <section class="panel scores-panel">
+          <div class="panel-heading"><div><p class="section-kicker">VISUAL CUES</p><h2>Expression scores</h2></div><span class="muted">Live</span></div>
+          <div id="scoreChart" class="score-chart" aria-label="Expression score chart"></div>
+          <p class="fine-print">These combined heuristic scores use several blendshape cues; they are not independent emotion probabilities.</p>
+        </section>
+
+        <section class="panel history-panel">
+          <div class="panel-heading"><div><p class="section-kicker">THIS SESSION</p><h2>Expression history</h2></div><button id="clearHistory" class="text-button">Clear</button></div>
+          <div id="historyList" class="history-list"><p class="empty-history">No expression changes yet.</p></div>
+          <p class="fine-print">Only labels and timestamps live in memory for this tab. No photos or video are saved.</p>
+        </section>
+
+        <section class="panel settings-panel">
+          <div class="panel-heading"><div><p class="section-kicker">CONTROLS</p><h2>Settings</h2></div></div>
+          <label class="toggle-row"><span>Show facial landmarks</span><input id="showLandmarks" type="checkbox" checked /><i></i></label>
+          <label class="toggle-row"><span>Record expression history</span><input id="recordHistory" type="checkbox" checked /><i></i></label>
+          <label class="range-row"><span>Expression sensitivity <output id="sensitivityValue">Medium</output></span><input id="sensitivity" type="range" min="0" max="100" value="50" /></label>
+          <label class="range-row"><span>Minimum detection signal <output id="minConfidenceValue">35%</output></span><input id="minConfidence" type="range" min="15" max="75" value="35" /></label>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
