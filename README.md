@@ -2,6 +2,9 @@
 
 A local, browser-based webcam dashboard that uses MediaPipe Face Landmarker blendshapes to estimate visible facial-expression patterns: Happy, Sad, Angry, Surprised, Fearful, Disgusted, or Neutral.
 
+## Deployment
+https://ai-expression-detector-8.vercel.app
+
 ## Important limitation
 
 This is not emotion, intent, identity, or mental-health detection. It only estimates visible facial-expression patterns using a transparent heuristic. Lighting, camera angle, facial variation, movement, occlusion, and the underlying model all affect its output. The displayed percentage is an approximate model-derived signal, not calibrated emotional confidence.
